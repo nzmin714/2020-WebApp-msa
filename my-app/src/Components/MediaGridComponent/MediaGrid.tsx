@@ -4,38 +4,44 @@ import { Grid } from '@material-ui/core';
 import './MediaGrid.css';
 
 interface IState {
-    links: any[];
-    data: any[];
+    original_title: string;
+    backdrop_path: string;
+    vote_average: string;
+    overview: string;
+    release_date: string;
 }
 interface IMediaGridProps {
     SearchQuery: (string | null);
-    StartDate: (Date | null);
-    EndDate: (Date | null);
 }
 function MediaGrid(props: IMediaGridProps) {
-    const [ItemArray, setItemArray] = useState<IState[]>([{ links: [], data: [] }]);
+    const [ItemArray, setItemArray] = useState<IState[]>([{ original_title: "", backdrop_path: "", vote_average: "", overview: "", release_date: "" }]);
 
     useEffect(() => {
-        fetch('https://images-api.nasa.gov/search?media_type=image&q=' + props.SearchQuery + '&year_start=' + props.StartDate?.getFullYear() + '&year_end=' + props.EndDate?.getFullYear())
+        fetch('https://api.themoviedb.org/3/search/movie?api_key=a203833094c82d1d04d6053a159fe631&language=en-US&query=' + props.SearchQuery + '&page=1&include_adult=false')
             .then(response => response.json())
             .then(response => {
-                setItemArray(response.collection.items)
+                setItemArray(response.results)
             })
             .catch(() => console.log("it didn't work")
             );
 
-    }, [props.SearchQuery, props.EndDate, props.StartDate]);
+    }, [props.SearchQuery]);
 
     var Cards: JSX.Element[] = [];
-    ItemArray.forEach((el: IState, i: Number) => {
-        if (!el || !el.links[0] || !el.data) {
-            return;
-        }
-        Cards.push(
-            <Grid key={"card_" + i} item sm={6} md={4} lg={3} className="MediaGridCard">
-                <MediaCard ImageUrl={el['links'][0]['href']} Description={el["data"][0]['description']} />
-            </Grid>)
-    })
+
+    if (ItemArray) {
+        ItemArray.forEach((el: IState, i: Number) => {
+            if (!el) {
+                return;
+            }
+            Cards.push(
+                <Grid key={"card_" + i} item sm={6} md={4} lg={3} className="MediaGridCard">
+                    <MediaCard Title={el.original_title} ImageUrl={el.backdrop_path} Description={el.overview} Vote={el.vote_average} Release={el.release_date} />
+                </Grid>)
+        })
+    }
+
+
 
     return (
         <div>

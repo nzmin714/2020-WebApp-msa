@@ -11,3 +11,6 @@
     overflow-y: scroll;
     overflow-wrap: break-word;
 }
+.MediaCardTitle{
+    font-size: 2em;
+}

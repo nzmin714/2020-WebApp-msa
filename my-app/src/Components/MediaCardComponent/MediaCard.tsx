@@ -7,8 +7,11 @@ import Typography from '@material-ui/core/Typography';
 import './MediaCard.css';
 
 interface IMediaCardProps {
+    Title: string | undefined;
+    Vote: string | undefined;
     ImageUrl: string | undefined;
     Description: string | undefined;
+    Release: string | undefined;
 }
 
 function MediaCard(props: IMediaCardProps) {
@@ -16,13 +19,15 @@ function MediaCard(props: IMediaCardProps) {
         <div>
             <Card className="MediaCardContainer">
                 <CardActionArea>
+                    <CardContent className="MediaCardTitle">{props.Title}</CardContent>
                     <CardMedia
                         className="MediaCardImage"
-                        image={props.ImageUrl}
+                        image={"https://image.tmdb.org/t/p/w500/" + props.ImageUrl}
+
                     />
                     <CardContent>
                         <Typography variant="body2" color="textSecondary" component="p" className="MediaCardDescription">
-                            {props.Description}
+                            <p><b>Vote Count:</b> {props.Vote} <br /><b>Release Date:</b> {props.Release}</p>{props.Description}
                         </Typography>
                     </CardContent>
                 </CardActionArea>
