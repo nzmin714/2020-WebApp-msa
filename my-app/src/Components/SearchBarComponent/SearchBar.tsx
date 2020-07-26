@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { Button, Grid, TextField } from '@material-ui/core';
 import { IUserInput } from '../../Common/Interfaces'
 import './SearchBar.css';

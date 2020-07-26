@@ -5,6 +5,8 @@ import MediaGrid from './Components/MediaGridComponent/MediaGrid';
 import { IUserInput } from './Common/Interfaces';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
 
+require('dotenv').config();
+
 const theme = createMuiTheme({
   breakpoints: {
     values: {
@@ -21,6 +23,7 @@ function App() {
   const [UserInput, setUserInput] = useState<IUserInput>({
     SearchQuery: "iron man",
   });
+
   function SetUserInput(a: IUserInput) {
     setUserInput(a);
   }

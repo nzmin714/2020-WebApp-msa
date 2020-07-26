@@ -16,8 +16,16 @@ interface IMediaGridProps {
 function MediaGrid(props: IMediaGridProps) {
     const [ItemArray, setItemArray] = useState<IState[]>([{ original_title: "", backdrop_path: "", vote_average: "", overview: "", release_date: "" }]);
 
+    // if (process.env.REACT_APP_API_KEY) {
+    //     var api_key = process.env.REACT_APP_API_KEY;
+    //    }
+    // else {
+    //     api_key = '';
+    // }
+
+
     useEffect(() => {
-        fetch('https://api.themoviedb.org/3/search/movie?api_key=a203833094c82d1d04d6053a159fe631&language=en-US&query=' + props.SearchQuery + '&page=1&include_adult=false')
+        fetch('https://api.themoviedb.org/3/search/movie?api_key=' + process.env.REACT_APP_API_KEY + '&language=en-US&query=' + props.SearchQuery + '&page=1&include_adult=false')
             .then(response => response.json())
             .then(response => {
                 setItemArray(response.results)
